@@ -1,0 +1,37 @@
+#footer {
+  background-color: $body-color;
+  color: #fff;
+  a {
+    color: #fff;
+    &:hover {
+      color: #fff;
+    }
+  }
+  ul {
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
+    li {
+      padding: 0;
+      border: none;
+      margin-bottom: 15px;
+    }
+  }
+  .social {
+    .fa-2x {
+      font-size: 1.25em;
+      color: #fff;
+    }
+  }
+}
+#footerbottom {
+  background-color: #e7e7e7;
+  padding: 30px 0 40px;
+
+  .footer-bottom {
+    .logo-footer {
+      width: 100px;
+      margin-right: 20px;
+    }
+  }
+}

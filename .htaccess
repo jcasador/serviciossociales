@@ -1,0 +1,32 @@
+<files wp-config.php> 
+order allow,deny 
+deny from all 
+</files>
+
+#Block the include-only files. 
+<IfModule mod_rewrite.c> 
+RewriteEngine On RewriteBase / 
+RewriteRule ^wp-admin/includes/ - [F,L] 
+RewriteRule !^wp-includes/ - [S=3] 
+RewriteRule ^wp-includes/[^/]+\.php$ - [F,L] 
+RewriteRule ^wp-includes/js/tinymce/langs/.+\.php - [F,L] 
+RewriteRule ^wp-includes/theme-compat/ - [F,L] 
+</IfModule> 
+
+RedirectMatch 403 /xmlrpc.php
+
+# BEGIN WordPress
+# Las directivas (líneas) entre «BEGIN WordPress» y «END WordPress» son
+# generadas dinámicamente y solo deberían ser modificadas mediante filtros de WordPress.
+# Cualquier cambio en las directivas que hay entre esos marcadores serán sobrescritas.
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+
+# END WordPress

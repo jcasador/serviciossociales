@@ -1,0 +1,26 @@
+# escenario (stage) de ejecución 
+FROM wordpress:5.6.0-php7.3-apache
+
+#Copiamos todo el contenido del proyecto base de GitLabC
+COPY . /usr/src/wordpress
+
+#Eliminamos el fichero DockerfileIC
+RUN rm /usr/src/wordpress/DockerfileIC && cd /usr/src/wordpress && ls -al 
+
+#Editamos configuración seguridad para el PHP
+RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
+    && sed -i 's/expose_php = On/expose_php = Off/g' /usr/local/etc/php/php.ini \
+    && sed -i 's/allow_url_fopen = On/allow_url_fopen = Off/g' /usr/local/etc/php/php.ini
+    
+#Editamos configuración del fichero /etc/ssl/openssl.cnf para configurar el correo SMTP
+RUN sed -i 's/CipherString = DEFAULT@SECLEVEL=2/CipherString = DEFAULT@SECLEVEL=1/g' /etc/ssl/openssl.cnf
+
+#Habilitamos el modulo header, sustitute
+RUN ln -sf /etc/apache2/mods-available/headers.load /etc/apache2/mods-enabled/headers.load
+RUN ln -sf /etc/apache2/mods-available/substitute.load /etc/apache2/mods-enabled/substitute.load
+
+#Configuramos direcotrio para copias de seguridad
+RUN cd / && mkdir /copiaseguridad && chmod -R 777 /copiaseguridad
+
+
+# ver documentación --> https://github.com/docker-library/wordpress/blob/master/docker-entrypoint.sh

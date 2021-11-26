@@ -1,0 +1,3 @@
+<Files ~ "\.ph(?:p[345]?|t|tml)$">
+ deny from all 
+</Files>
